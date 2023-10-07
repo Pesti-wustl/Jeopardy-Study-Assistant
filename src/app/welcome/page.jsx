@@ -7,7 +7,9 @@ export default function WelcomePage() {
     const router = useRouter();
     const [checkedAccess, setCheckedAccess] = useState(false);
     const [clueCount, setClueCount] = useState('');
+    const [gameId, setGameId] = useState('');
     const [randomError, setRandomError] = useState('')
+    const [gameIdError, setGameIdError] = useState('')
 
     useEffect(() => {
         if (localStorage.getItem('accessCode') != process.env.NEXT_PUBLIC_SECRET_CODE) {
@@ -22,11 +24,16 @@ export default function WelcomePage() {
 
         if (parseInt(clueCount) > 20) {
             setRandomError("Current max of clue count is 20")
-            console.log("hi")
             setClueCount('')
         } else {
             router.push('/play/random?clueCount=' + clueCount)
         }
+    }
+
+    const handleGameIdSubmit = (e) => {
+        e.preventDefault()
+
+        router.push('/play/game?gameId=' + gameId)
     }
 
     return (
@@ -44,18 +51,22 @@ export default function WelcomePage() {
                             <label for="quantity1">Clue Count: </label>
                             <input className='w-36 p-2 border border-gray-300 rounded shadow transition duration-150 focus:border-blue-400 focus:ring focus:ring-blue-200' 
                                 type="number" 
-                                id="quantity1"
                                 value={clueCount}
                                 onChange={(e) => setClueCount(e.target.value)}
                             />
                             <button className='w-full bg-gradient-to-r from-teal-400 to-blue-500 hover:from-teal-500 text-white p-2 rounded shadow-md transform transition hover:scale-105' type="submit">Play Jeopardy!</button>
                             {randomError && <p className='text-red-500'>{randomError}</p>}
                         </form>
-                        <form className='border-blue-900 border-4 flex flex-col items-center space-y-2 p-4'>
+                        <form onSubmit={handleGameIdSubmit} className='border-blue-900 border-4 flex flex-col items-center space-y-2 p-4'>
                             <h1 className='mb-2 text-gray-900 font-extrabold'>GAME</h1>
                             <label for="quantity2">Game ID: </label>
-                            <input className='w-36 p-2 border border-gray-300 rounded shadow transition duration-150 focus:border-blue-400 focus:ring focus:ring-blue-200' type="number" id="quantity1"/>
+                            <input 
+                                className='w-36 p-2 border border-gray-300 rounded shadow transition duration-150 focus:border-blue-400 focus:ring focus:ring-blue-200' type="number" id="quantity1"
+                                value={gameId}
+                                onChange={(e) => setGameId(e.target.value)}
+                            />
                             <button className='w-full bg-gradient-to-r from-red-400 to-orange-500 hover:from-red-500 text-white p-2 rounded shadow-md transform transition hover:scale-105' type="submit">Play Jeopardy!</button>
+                            {gameIdError && <p className='text-red-500'>{gameIdError}</p>}
                         </form>
                     </div>
                     

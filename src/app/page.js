@@ -30,7 +30,6 @@ export default function Home() {
         </form>
         {error && <p className='text-red-500'>{error}</p>}
       </div>
-      <p>Hi</p>
     </div>
   )
 }
