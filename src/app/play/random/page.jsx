@@ -8,7 +8,7 @@ export default function RandomPage() {
     const [checkedAccess, setCheckedAccess] = useState(false);
 
     useEffect(() => {
-        if (!localStorage.getItem('hasAccess')) {
+        if (localStorage.getItem('accessCode') != process.env.NEXT_PUBLIC_SECRET_CODE) {
             router.push('/');
         } else {
             setCheckedAccess(true);

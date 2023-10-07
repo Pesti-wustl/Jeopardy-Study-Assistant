@@ -14,11 +14,10 @@ export default function Home() {
     e.preventDefault()
 
     if (code == process.env.NEXT_PUBLIC_SECRET_CODE) {
-      localStorage.setItem('hasAccess', true)
+      localStorage.setItem('accessCode', process.env.NEXT_PUBLIC_SECRET_CODE)
       router.push('/welcome')
     } else {
-      console.log(process.env.NEXT_PUBLIC_SECRET_CODE, code)
-      setError('Incorrect Code')
+      setError('Incorrect Code') 
     }
   }
 
